@@ -4,14 +4,11 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.lang.Nullable;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.fourkites.facilities.dy.eventdataingestion.service.SwitcherEventService;
 
@@ -22,12 +19,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/switcher_event")
 public class SwitcherEventController {
 
     @NonNull
     private SwitcherEventService eventService;
 
-    @PostMapping("/switcher_event")
+    @GetMapping
+    public String greet(){
+        log.info("Someone called me and I am awake");
+        return "Success";
+    }
+    @PostMapping
     public ResponseEntity<String> createSwitcherEventMaster(
             @NonNull @RequestParam String tenant,
             @Nullable @RequestParam(value = "site_id") Integer siteId,
@@ -38,6 +41,8 @@ public class SwitcherEventController {
             @RequestBody Map<String, Object> requestBody) {
 
         try {
+            MDC.put("request_id",requestId);
+
             Integer userId = (Integer) requestBody.get("user_id");
             Timestamp eventTime = Timestamp.valueOf(eventTimeStr);
             Map<String, Object> eventData = new HashMap<>();

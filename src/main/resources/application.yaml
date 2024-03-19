@@ -1,16 +1,18 @@
 
 server:
-  port: 5050
+  port: ${ CONTAINER_PORT:5050 }
 logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] [request_id: %X{request_id}] %-5level %logger{36} - %msg%n"
   level:
-    root: INFO
+    root: ${APP_LOG_LEVEL:INFO}
     com:
       fourkites:
         facilities:
           dy:
-            EventDataIngestion:
-              controller: DEBUG
-              service: TRACE
+            eventdataingestion:
+              controller: ${ CONTROLLER_LOG_LEVEL:DEBUG }
+              service: ${ SERVICE_LOG_LEVEL:TRACE }
 management:
   endpoints:
     web:
@@ -27,11 +29,11 @@ management:
       enabled: true
 spring:
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/yi_app_db
-    username: newt
-    password: Iengoa0iCh3ahd4oe2ch
+    url: ${ JDBC_URL:jdbc:postgresql://127.0.0.1:5431/yms_app_db }
+    username: ${ JDBC_USERNAME:postgres}
+    password: ${JDBC_PASSWORD}
     hikari:
-      maxPoolSize: 10
-      poolName: DYLocal
+      maxPoolSize: ${HIKARI_POOL_SiZE:10}
+      poolName: ${POOL_NAME:DY-pool}
 
 

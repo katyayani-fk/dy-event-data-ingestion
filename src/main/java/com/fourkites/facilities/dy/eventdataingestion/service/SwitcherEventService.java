@@ -2,6 +2,7 @@ package com.fourkites.facilities.dy.eventdataingestion.service;
 
 import java.sql.Timestamp;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -22,9 +23,9 @@ public class SwitcherEventService {
     private final SwitcherEventLogDAO switcherEventLogDAO;
 
     public void addSwitcherEvent(String tenant, Integer siteId, Timestamp eventTime, Integer userId, Map<String, Object> eventData) {
-        Integer switcherEventMasterId = switcherEventMasterDAO.add(tenant, siteId, eventTime, userId);
-        if (switcherEventMasterId != null) {
-            switcherEventLogDAO.add(switcherEventMasterId, tenant, eventData, eventTime);
+        Optional<Integer> switcherEventMasterId = switcherEventMasterDAO.add(tenant, siteId, eventTime, userId);
+        if (switcherEventMasterId.isPresent()) {
+            switcherEventLogDAO.add(switcherEventMasterId.get(), tenant, eventData, eventTime);
         } else {
             throw new RuntimeException("Failed to add switcher event master record");
         }

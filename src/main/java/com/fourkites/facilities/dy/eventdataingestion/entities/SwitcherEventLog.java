@@ -16,3 +16,4 @@ public class SwitcherEventLog {
     private Timestamp eventTime;
     private Timestamp createdAt;
 }
+
