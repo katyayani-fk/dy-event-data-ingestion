@@ -8,7 +8,7 @@ logging:
       fourkites:
         facilities:
           dy:
-            springbootdemo:
+            EventDataIngestion:
               controller: DEBUG
               service: TRACE
 management:

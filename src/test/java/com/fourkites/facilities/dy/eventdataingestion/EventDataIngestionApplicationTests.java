@@ -1,10 +1,10 @@
-package com.fourkites.facilities.dy.springbootdemo;
+package com.fourkites.facilities.dy.eventdataingestion;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringBootDemoApplicationTests {
+class EventDataIngestionApplicationTests {
 
 	@Test
 	void contextLoads() {
